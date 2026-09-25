@@ -31,6 +31,14 @@ jobs:
           python3 -m unittest discover \
             -s contributions/io-board-interface/xbattlax/tests \
             -p 'test_*.py'
+      - name: Install pytest for recovery-safety tests
+        run: python3 -m pip install --disable-pip-version-check pytest
+      - name: Run recovery-safety tests (rclpy stubbed, no ROS graph)
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        working-directory: contributions/recovery-safety/xbattlax/oomwoo_recovery_safety
+        run: |
+          PYTHONPATH="$PWD" python3 -m pytest test -q
 
   protocol-c-cpp:
     runs-on: ubuntu-latest
